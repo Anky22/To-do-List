@@ -39,7 +39,7 @@ class Login extends React.Component{
 			let newArray=[];
 			for(let err of prevState.errors)
 			{
-				if(elm!=err.elm)
+				if(elm!==err.elm)
 				{
 					newArray.push(err);
 				}

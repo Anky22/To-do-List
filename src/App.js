@@ -4,7 +4,7 @@ import Calender from './Calender';
 import './Todo.css';
 import Labels from "./labels";
 import "./Labels.css";
-import Toolbar from './Toolbar';
+//import Toolbar from './Toolbar';
 import ReactSearchBox from 'react-search-box';
 import {BrowserRouter as Router,Link,Route,Switch} from 'react-router-dom';
 import history from './history';
