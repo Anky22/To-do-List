@@ -1,4 +1,5 @@
 import React from 'react'
+import './calender.css'
 import addMonths from 'date-fns/addMonths'
 import subMonths from 'date-fns/subMonths'
 import { isSameYear,isSameMonth,isSameDay,addDays, format,startOfMonth,endOfMonth,startOfWeek,endOfWeek} from 'date-fns'
@@ -14,6 +15,8 @@ class Calender extends React.Component{
     }
 
  renderCells(){
+
+        console.log(this.state);
         const style = { 
           backgroundColor : "paleturquoise"
         }

@@ -6,11 +6,11 @@ import Labels from "./labels";
 import "./Labels.css";
 //import Toolbar from './Toolbar';
 import ReactSearchBox from 'react-search-box';
-import {BrowserRouter as Router,Link,Route,Switch} from 'react-router-dom';
-import history from './history';
-import Routes from './routes';
+//import {BrowserRouter as Router,Link,Route,Switch} from 'react-router-dom';
+//import history from './history';
+//import Routes from './routes';
 //import {Link} from 'react-router-dom';
-import Show from './Show';
+//import Show from './Show';
 import './Toolbar.css';
 import Login from './Login';
 //import './login.css';
@@ -23,9 +23,10 @@ class App extends React.Component {
     super(props);
     this.state=
     {
-         isClickedPlus:false,
+         isClicked:false,
          isClickedProgress:false,
          isClickedLogin:false,
+         home:true,
           todos: [],
           Label_List: [],
           val: "",
@@ -46,6 +47,8 @@ class App extends React.Component {
       this.toggleLogin=this.toggleLogin.bind(this);
       this.showLogin=this.showLogin.bind(this);
       this.onSearchChange=this.onSearchChange.bind(this);
+      this.showhome=this.showhome.bind(this);
+      this.toggleHome=this.toggleHome.bind(this);
   }
   
   handleDelete(id){
@@ -105,30 +108,69 @@ onSearchChange=(event)=>{
     this.setState({searchfield: event.target.value})
   }
 
-    //this.toggle=this.toggle.bind(this);
 
 toggle(){
-    //Clicked=this.state.isClicked;
+    
     this.setState(prevState=>({
-      isClicked: !prevState.isClicked,isClickedLogin:false,isClickedProgress:false}));
+      isClicked: !prevState.isClicked,isClickedLogin:false, isClickedProgress:false, home:false}));
+    
   }
 
   toggleNav(){
-    //Clicked=this.state.isClicked;
+  
+    //console.log("Inside Toggle ");
     this.setState(prevState=>({
-      isClickedProgress: !prevState.isClickedProgress, isClicked: false,isClickedLogin:false}));
+      isClickedProgress: !prevState.isClickedProgress, isClicked: false,isClickedLogin:false,home:false}));
   }
 
-  toggleLogin(){
-    //Clicked=this.state.isClicked;
+  toggleHome(){
+
     this.setState(prevState=>({
-      isClickedLogin: !prevState.isClickedLogin, isClicked: false,isclickedProgress:false}));
+      home:true,isClickedProgress:false, isClicked: false,isClickedLogin:false}));
   }
+
+
+  toggleLogin(){
+    this.setState(prevState=>({
+      isClickedLogin: !prevState.isClickedLogin, isClicked: false,isClickedProgress:false,home:false}));
+  }
+
+
+
+  showNav=()=>{
+    return(
+
+      
+
+            <header className="toolbar">
+              <nav className="toolbar_navigation"> 
+              
+    
+                  <div className='toolbar_navigation_items'>
+                    <ul>
+                     <li onClick={this.toggleLogin}> Login </li>
+                     <li onClick={this.toggleHome}> Home</li>
+                     <li onClick={this.toggleNav}>Progress</li> 
+
+                     <div className='search'> <ReactSearchBox onChange={this.onSearchChange} placeholder="Search"/> </div>
+                        </ul>               
+                  </div>
+                 
+                 
+  
+      
+              </nav>
+           </header>);
+          
+  }
+
 
 
   showForm=()=>{
-    return(
 
+    if(this.state.isClicked===true)
+    return(
+    <div className='wrapper'>
       <div className="form-1">
              <form onSubmit={this.handleSubmit}>
                 <h2>TASK<input name="val" value={this.state.val} onChange={this.handleText} placeholder="ENTER YOUR TASK" style={{margin:"20px",padding:"10px"}}/><br/>
@@ -158,38 +200,40 @@ toggle(){
                  <input type ="date" placeholder="yyyy/mm/dd" name="deadline" onChange={this.handleText} style={{margin:"20px",padding:"10px"}}/>
               </label><br/>
                  
-                 <div className="sub-button"><input type="submit" value="Submit" style={{margin:"20px",padding:"20px"}}/></div>
+                 <div className="sub-button"><input type="submit" value="Submit" style={{margin:"20px",padding:"20px" }}/></div>
            
 
               
               </h2>
               </form>
         </div>
+      </div>
         );
+
+      else return(<div></div>);
   }
 
 
   showLogin=()=>
   {
-    
-    return(<Login/>);
+    if(this.state.isClickedLogin===true)
+      return(<div><Login/></div>);
+    else
+      return(<div> </div>);
   
   }
-  showCalender=()=>
-{
-  return( 
-  <div>
-  <Calender list={this.state.todos}/>
- 
-  </div>);
-    
-}
 
-goBack=()=>
-{
-  this.setState({isClickedProgress:false,isClickedPlus:false,isClickedLogin:false});
-  
-}
+
+  showCalender=()=>
+  {
+     if(this.state.isClickedProgress===true)
+           return (<Calender list={this.state.todos}/>);
+    else
+            return <div> </div>;
+    
+  }
+
+
 
 
 
@@ -198,65 +242,53 @@ onSearchChange=(event)=>{
   }
 
 
-
+showhome=()=>
+{
+  if(this.state.home===true)
+  return(
+          
+            <div class="jumbotron">
+              
+              <div className="text"> Get an amazing platform to<br/> manage your day to day chores</div>
+            </div>
+        );
+}
   
 
-  showNav=()=>{
-    return(
-
-      
-
-            <header className="toolbar">
-              <nav className="toolbar_navigation"> 
-              
-    
-                  <div className='toolbar_navigation_items'>
-                    <ul>
-                    <li>  <button onClick={this.toggleLogin}> Login </button></li>
-                     <li> <button onClick={this.goBack}> Home</button></li>
-                     <li> <button onClick={this.toggleNav}>Progress</button></li>
-                     <li><ReactSearchBox placeholder="Search"/></li>
-                    
-                    </ul>
-                  </div>
-                 
-      
-              </nav>
-           </header>);
-          
-  }
 
   render()
   {
   const LabelItems = this.state.Label_List.map(item => <Labels key={item.id} 
       label={item.label}  todos={this.state.todos} handleDelete={this.handleDelete} handleChange={this.handleChange}/>)
+
      
       return (
-         <div>
-            <div className="col col-center">
-              <h1>TO-DO APP</h1>
+      <div>
+
+          <div className="margin"> .</div>
+         <div className="col col-center">
+             <br/>
+              <b>TO DO APP</b>
             </div>
-           
+          <br/>
+            {this.showNav()}
+            {this.showhome()}
 
-          
-              {this.state.isClickedProgress?this.showCalender():this.showNav()}
-           
-             {this.state.isClicked?this.showForm():null}
-             {this.state.isClickedLogin?this.showLogin():null}
 
-            <Router history={history}>
-               <Routes />
-            </Router>
+             <div>
+             
+              {this.showCalender()}
+             {this.showForm()}
+             {this.showLogin()}
+            </div>
 
            <div>
             {LabelItems}
           </div>
-          <div class='add'>
+          <div className='add'>
                 <button align='center' className= "button button5" onClick={this.toggle} > + </button>
           </div>
-          <div className="back">
-           <button className="button" onClick={this.goBack}> Go Back </button>
-        </div>
+         
         </div>
         
       );
