@@ -1,5 +1,5 @@
 import React from 'react'
-import './calender.css'
+//import './calender.css';
 import addMonths from 'date-fns/addMonths'
 import subMonths from 'date-fns/subMonths'
 import { isSameYear,isSameMonth,isSameDay,addDays, format,startOfMonth,endOfMonth,startOfWeek,endOfWeek} from 'date-fns'
@@ -45,11 +45,8 @@ class Calender extends React.Component{
                 onClick={() => this.onDateClick(cloneDay)}
                 style = { this.hasTasks(day) ? style : null}
             >
-              <span className="tooltiptext"><h6>
-                TOTAL : {this.ProgressStatus(day)[0]}
-                <br></br>
-                DONE : {this.ProgressStatus(day)[1]}
-              </h6></span>
+             
+            
                 <span className="number" title="this is working">{formattedDate}</span>
                 <span className="bg">{formattedDate}</span>
              </div>

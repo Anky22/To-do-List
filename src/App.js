@@ -11,8 +11,8 @@ import ReactSearchBox from 'react-search-box';
 //import Routes from './routes';
 //import {Link} from 'react-router-dom';
 //import Show from './Show';
-import './Toolbar.css';
-import Login from './Login';
+//import './Toolbar.css';
+//import Login from './Login';
 //import './login.css';
 //import Plusbutton from './Plusbutton';
 
@@ -25,7 +25,7 @@ class App extends React.Component {
     {
          isClicked:false,
          isClickedProgress:false,
-         isClickedLogin:false,
+         //isClickedLogin:false,
          home:true,
           todos: [],
           Label_List: [],
@@ -44,8 +44,8 @@ class App extends React.Component {
       this.handleDelete = this.handleDelete.bind(this)
       this.toggle=this.toggle.bind(this);
       this.toggleNav=this.toggleNav.bind(this);
-      this.toggleLogin=this.toggleLogin.bind(this);
-      this.showLogin=this.showLogin.bind(this);
+      //this.toggleLogin=this.toggleLogin.bind(this);
+     // this.showLogin=this.showLogin.bind(this);
       this.onSearchChange=this.onSearchChange.bind(this);
       this.showhome=this.showhome.bind(this);
       this.toggleHome=this.toggleHome.bind(this);
@@ -113,6 +113,9 @@ toggle(){
     
     this.setState(prevState=>({
       isClicked: !prevState.isClicked,isClickedLogin:false, isClickedProgress:false, home:false}));
+
+    if(this.isClicked===false)
+      this.setState({home:true})
     
   }
 
@@ -130,11 +133,24 @@ toggle(){
   }
 
 
-  toggleLogin(){
+  /*toggleLogin(){
     this.setState(prevState=>({
       isClickedLogin: !prevState.isClickedLogin, isClicked: false,isClickedProgress:false,home:false}));
+
+
+
   }
 
+
+   showLogin=()=>
+  {
+    if(this.state.isClickedLogin===true)
+      return(<div><Login/></div>);
+    else
+      return(<div> </div>);
+  
+  }
+*/
 
 
   showNav=()=>{
@@ -148,12 +164,12 @@ toggle(){
     
                   <div className='toolbar_navigation_items'>
                     <ul>
-                     <li onClick={this.toggleLogin}> Login </li>
+                     
                      <li onClick={this.toggleHome}> Home</li>
                      <li onClick={this.toggleNav}>Progress</li> 
 
                      <div className='search'> <ReactSearchBox onChange={this.onSearchChange} placeholder="Search"/> </div>
-                        </ul>               
+                    </ul>               
                   </div>
                  
                  
@@ -214,14 +230,7 @@ toggle(){
   }
 
 
-  showLogin=()=>
-  {
-    if(this.state.isClickedLogin===true)
-      return(<div><Login/></div>);
-    else
-      return(<div> </div>);
-  
-  }
+ 
 
 
   showCalender=()=>
@@ -229,8 +238,11 @@ toggle(){
      if(this.state.isClickedProgress===true)
            return (<Calender list={this.state.todos}/>);
     else
-            return <div> </div>;
     
+       return     <div></div>;
+
+        
+  
   }
 
 
@@ -244,10 +256,10 @@ onSearchChange=(event)=>{
 
 showhome=()=>
 {
-  if(this.state.home===true)
+  if(this.state.home===true || (this.state.isClickedProgress===false && this.state.isClicked===false))
   return(
           
-            <div class="jumbotron">
+            <div className="homepage">
               
               <div className="text"> Get an amazing platform to<br/> manage your day to day chores</div>
             </div>
@@ -266,8 +278,8 @@ showhome=()=>
       <div>
 
           <div className="margin"> .</div>
-         <div className="col col-center">
-             <br/>
+         <div className="heading">
+             
               <b>TO DO APP</b>
             </div>
           <br/>
@@ -279,14 +291,14 @@ showhome=()=>
              
               {this.showCalender()}
              {this.showForm()}
-             {this.showLogin()}
+            
             </div>
 
            <div>
             {LabelItems}
           </div>
           <div className='add'>
-                <button align='center' className= "button button5" onClick={this.toggle} > + </button>
+                <button className= "button button5" onClick={this.toggle} > + </button>
           </div>
          
         </div>
