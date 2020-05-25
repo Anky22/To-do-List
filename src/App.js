@@ -167,6 +167,9 @@ toggle(){
                      
                      <li onClick={this.toggleHome}> Home</li>
                      <li onClick={this.toggleNav}>Progress</li> 
+                       <div className='add'>
+                         <button className= "button button5" onClick={this.toggle} > + </button>
+                      </div>
 
                      <div className='search'> <ReactSearchBox onChange={this.onSearchChange} placeholder="Search"/> </div>
                     </ul>               
@@ -297,9 +300,7 @@ showhome=()=>
            <div>
             {LabelItems}
           </div>
-          <div className='add'>
-                <button className= "button button5" onClick={this.toggle} > + </button>
-          </div>
+        
          
         </div>
         
